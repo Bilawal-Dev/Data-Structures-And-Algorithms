@@ -1,4 +1,4 @@
-## Data-Structures-And-Algorithms Repository 📘💻
+# Data-Structures-And-Algorithms Repository 📘💻
 ### Advancing My Software Engineering Skills 🚀
 
 This repository represents a key phase in my software engineering journey. During my third semester at UET Mardan, I focused on Data Structures and Algorithms (DSA) using C++. This course provided me with a solid foundation in essential data structures and algorithms, which are critical for efficient software development. Mastering these concepts has significantly enhanced my problem-solving skills and understanding of algorithmic thinking.

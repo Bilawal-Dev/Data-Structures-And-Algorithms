@@ -33,7 +33,7 @@ public:
         }
 
         Node *current = root;
-        Node *parent = nullptr;
+        Node *parent = current;
 
         while (current != NULL) {
             parent = current;

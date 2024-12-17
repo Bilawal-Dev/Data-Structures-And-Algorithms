@@ -1,6 +1,8 @@
 #include<iostream>
 using namespace std;
 
+//Stack Implementation With Class : 
+
 class Stack{
     private:
         int array[10];
@@ -37,13 +39,14 @@ class Stack{
 
 };
 
+//Stack Implementation With Functional Approach :
+
 int top = -1;
 
 void push(int stack[], int size, int num){
     if(top < size - 1 ){
-        top++;
         cout<<"\nPushing "<<num<<" To Stack"<<endl;
-        stack[top] = num;
+        stack[++top] = num;
     }
     else{
         cout<<"\nError: Stack Overflow!"<<endl;

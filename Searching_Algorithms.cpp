@@ -53,8 +53,7 @@ int main()
 
     int *Numbers = new int[size];
 
-    cout << "\n\nEnter The Elements Of The Array : " << endl
-         << endl;
+    cout << "\n\nEnter The Elements Of The Array : " << endl << endl;
 
     for (int i = 0; i < size; i++)
     {

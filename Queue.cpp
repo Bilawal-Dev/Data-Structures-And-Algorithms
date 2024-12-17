@@ -1,6 +1,8 @@
 #include<iostream>
 using namespace std;
 
+//Queue Implementation With Class : 
+
 class Queue{
     private:
         int array[5];
@@ -64,6 +66,8 @@ class Queue{
             }
         }
 };
+
+//Queue Implementation With Functional Approach :
 
 int front = 0;
 int rear = -1;

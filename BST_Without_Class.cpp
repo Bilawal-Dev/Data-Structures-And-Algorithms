@@ -3,15 +3,15 @@ using namespace std;
 
 class Node{
     public:
-    int data;
-    Node* lchild;
-    Node* rchild;
+        int data;
+        Node* lchild;
+        Node* rchild;
 
-    Node(int val){
-        data = val;
-        lchild = NULL;
-        rchild = NULL;
-    }
+        Node(int val){
+            data = val;
+            lchild = NULL;
+            rchild = NULL;
+        }
 };
 
 Node* insertIterative(Node* root, int val){
@@ -25,6 +25,8 @@ Node* insertIterative(Node* root, int val){
     Node* parent = temp; //Parent Is One Node Above Temp, So When Temp Reaches Null It Points To The Up Node
 
     while(temp != NULL){
+        parent = temp;
+
         if(val < temp->data){
             temp = temp->lchild;
         }   
@@ -57,9 +59,6 @@ Node* insertRecursive(Node* root, int val){
     }
     else if(val > root->data){
         root->rchild = insertRecursive(root->rchild, val);
-    }
-    else{
-        return; //Value Already Exists In The Tree
     }
 
     return root;

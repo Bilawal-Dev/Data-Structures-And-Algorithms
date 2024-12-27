@@ -79,7 +79,7 @@ public:
         Node *current = head;
         int pos = 1;
 
-        while (pos != position)
+        while (current != NULL && pos != position - 1)
         {
             current = current->next;
             pos++;

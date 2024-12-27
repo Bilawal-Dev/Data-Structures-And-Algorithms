@@ -7,7 +7,7 @@ class Node{
         int data;          
         int height;        // Height of the node (used for balancing the tree)
         Node* left;        
-        Node* right;       
+        Node* right;
 
         
         Node(int val){

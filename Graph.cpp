@@ -1,65 +1,105 @@
 #include <iostream>
+#include <list>
+#include <queue>
 using namespace std;
 
-class Graph {
-private:
-    int numVertices;
-    int** adjMatrix;  // Adjacency matrix to store graph edges (0 or 1)
+class Graph
+{
+    int vertex;         // Number of vertices
+    list<int> *adjList; // Array of adjacency lists
 
 public:
-    // Constructor to initialize the graph with a specified number of vertices
-    Graph(int vertices) {
-        numVertices = vertices;
-        // Array of int pointers
-        adjMatrix = new int*[numVertices];  // Allocate memory for rows of the matrix
-        for (int i = 0; i < numVertices; i++) {
-            // Array of int types
-            adjMatrix[i] = new int[numVertices];  // Allocate memory for each row's columns
-            for (int j = 0; j < numVertices; j++) {
-                adjMatrix[i][j] = 0;  // Initialize matrix values to 0 (no edges)
+    Graph(int v)
+    {
+        vertex = v;
+        adjList = new list<int>[v];
+    }
+
+    void addEdge(int x, int y)
+    {
+        adjList[x].push_back(y);
+        adjList[y].push_back(x); // For undirected graph
+    }
+
+    void displayGraph()
+    {
+        for (int i = 0; i < vertex; i++)
+        {
+            cout << "Vertex: " << i << " -> ";
+            for (int item : adjList[i])
+            {
+                cout << item << " ";
+            }
+            cout << endl;
+        }
+    }
+
+    void bfs(int start)
+    {
+        bool visited[vertex] = {false}; // Track visited vertices
+        queue<int> q;                   // Queue for BFS
+
+        visited[start] = true;
+        q.push(start);
+
+        cout << "BFS starting from vertex " << start << ": ";
+        while (!q.empty())
+        {
+            int current = q.front();
+            cout << current << " ";
+            q.pop();
+
+            // Visit all unvisited neighbors
+            for (int item : adjList[current])
+            {
+                if (!visited[item])
+                {
+                    visited[item] = true;
+                    q.push(item);
+                }
+            }
+        }
+        cout << endl;
+    }
+
+    void dfs(int current, bool visited[])
+    {
+        visited[current] = true;
+        cout << current << " ";
+
+        // Visit all unvisited neighbors
+        for (int item : adjList[current])
+        {
+            if (!visited[item])
+            {
+                dfs(item, visited);
             }
         }
     }
 
-    // Method to add an edge between two vertices i and j
-    void addEdge(int i, int j, int weight) {
-        if (i >= 0 && i < numVertices && j >= 0 && j < numVertices) {
-            adjMatrix[i][j] = weight;  // Set the edge from vertex i to j as weight
-            adjMatrix[j][i] = weight;  // Set the edge from vertex j to i as 1 (undirected graph)
-        }
-    }
-
-    // Method to remove an edge between two vertices i and j
-    void removeEdge(int i, int j) {
-        if (i >= 0 && i < numVertices && j >= 0 && j < numVertices) {
-            adjMatrix[i][j] = 0;  // Set the edge from vertex i to j as 0 (remove edge)
-            adjMatrix[j][i] = 0;  // Set the edge from vertex j to i as 0 (remove edge)
-        }
-    }
-
-    // Method to display the adjacency matrix
-    void display() {
-        for (int i = 0; i < numVertices; i++) {
-            cout << i << ": ";  // Print the vertex number
-            for (int j = 0; j < numVertices; j++) {
-                cout << adjMatrix[i][j] << " ";  // Print matrix values (0 or 1)
-            }
-            cout << endl;  // Move to the next line after each row
-        }
+    void dfs(int start)
+    {
+        bool visited[vertex] = {false}; // Track visited vertices
+        cout << "DFS starting from vertex " << start << ": ";
+        dfs(start, visited); // Calling the same function
+        cout << endl;
     }
 };
 
-int main() {
-    Graph g(3);  // Create a graph with 5 vertices
+int main()
+{
+    Graph g(4);
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(1, 2);
+    g.addEdge(2, 3);
 
-    g.display();  // Display the adjacency matrix representing the graph
+    cout << "Graph Representation:" << endl;
+    g.displayGraph();
 
-    cout<<endl;
-
-    // Add edges between vertices
-    g.addEdge(0, 1, 2);
-
-    g.display();  // Display the adjacency matrix representing the graph
+    cout << endl;
+    g.bfs(0); // Perform BFS starting from vertex 0
+    g.dfs(0); // Perform DFS starting from vertex 0
 
     return 0;
 }

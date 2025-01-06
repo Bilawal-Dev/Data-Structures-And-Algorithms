@@ -106,12 +106,14 @@ public:
 class HashTable
 {
 private:
-    int size = 10;  // Fixed size of the hash table
+    int size;  // Fixed size of the hash table
     LinkedList *table[10];  // Array of LinkedList pointers with fixed size
 
 public:
     HashTable()
     {
+        size = 10;
+        
         for (int i = 0; i < size; i++)
         {
             table[i] = new LinkedList();  // Initialize each element of the table as a new LinkedList

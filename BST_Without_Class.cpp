@@ -34,7 +34,7 @@ Node* insertIterative(Node* root, int val){
             temp = temp->rchild;
         }
         else{
-            return; //Value Already Exists In The Tree
+            return root; //Value Already Exists In The Tree
         }
     }
 

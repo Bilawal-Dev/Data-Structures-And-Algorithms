@@ -39,7 +39,7 @@ public:
         // Calculate hash value based on ASCII values of characters in the string
         for (int i = 0; i < key.length(); i++)
         {
-            hashValue += key[i]; // Add ASCII value of each character
+            hashValue = hashValue + key[i]; // Add ASCII value of each character
         }
 
         return hashValue % size; // Ensure the value fits within the table size
@@ -52,7 +52,7 @@ public:
         // Second hash function, typically a prime number not equal to the table size
         for (int i = 0; i < key.length(); i++)
         {
-            hashValue += key[i];
+            hashValue = hashValue + key[i];
         }
 
         return 1 + (hashValue % (size - 1)); // Return a number to step with, must not be zero

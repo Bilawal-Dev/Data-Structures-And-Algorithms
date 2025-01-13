@@ -2,8 +2,7 @@
 #include <string>
 using namespace std;
 
-class Node
-{
+class Node {
 public:
     string data;
 
@@ -13,8 +12,7 @@ public:
     }
 };
 
-class HashTable
-{
+class HashTable {
 private:
     Node *table[10];
     int size = 10;
@@ -167,8 +165,7 @@ public:
     }
 };
 
-int main()
-{
+int main() {
     HashTable ht;
 
     ht.Linear_Probing_Insert("apple");

@@ -1,8 +1,7 @@
-#include <iostream>
+#include<iostream>
 using namespace std;
 
-void merge(int arr[], int start, int end)
-{
+void merge(int arr[], int start, int end) {
     int mid = (start + end) / 2;
 
     int len1 = mid - start + 1;
@@ -54,9 +53,7 @@ void merge(int arr[], int start, int end)
     }
 }
 
-void mergeSort(int arr[], int start, int end)
-{
-
+void mergeSort(int arr[], int start, int end) {
     if (start >= end)
     {
         return;
@@ -71,11 +68,8 @@ void mergeSort(int arr[], int start, int end)
     merge(arr, start, end);
 }
 
-int main()
-{
+int main() {
     int arr[5] = {2, 5, 1, 6, 9};
 
-    int size = 5;
-
-    mergeSort(arr, 0, size - 1);
+    mergeSort(arr, 0, 4);
 }

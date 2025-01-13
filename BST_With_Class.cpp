@@ -56,12 +56,12 @@ public:
     }
 
     // Function to insert a value into the BST
-    void insert(int val) {
-        root = insertRecursive(root, val);
+    void insertRecursive(int val) {
+        root = insertRecursiveHelper(root, val);
     }
 
     // Recursive function to insert a value into the BST
-    Node *insertRecursive(Node *node, int val) {
+    Node *insertRecursiveHelper(Node *node, int val) {
         // If the tree is empty, create a new node and return it
         if (node == NULL) {
             return new Node(val);
@@ -69,127 +69,145 @@ public:
 
         // Otherwise, recur down the tree
         if (val < node->data) {
-            node->left = insertRecursive(node->left, val);
+            node->left = insertRecursiveHelper(node->left, val);
         } else if (val > node->data) {
-            node->right = insertRecursive(node->right, val);
+            node->right = insertRecursiveHelper(node->right, val);
         }
 
         // Return the (unchanged) node pointer
         return node;
     }
 
+    // Iterative function to search for a value in the BST
+    bool searchIterative(int val){
+        Node* temp = root;
+
+        while(temp != NULL){
+            if(temp->data == val){
+                return true;
+            }
+            else if(temp->data > val){
+                temp = temp->left;
+            }
+            else{
+                temp = temp->right;
+            }
+        }
+
+        return false;
+    }
+
     // Function to search for a value in the BST
-    bool search(int val) {
-        return searchRecursive(root, val);
+    bool searchRecursive(int val) {
+        return searchRecursiveHelper(root, val);
     }
 
     // Recursive function to search for a value in the BST
-    bool searchRecursive(Node *node, int val) {
+    bool searchRecursiveHelper(Node *node, int val) {
         // Base case: root is null
         if (node == NULL) {
             return false;
         }
 
-        // Key is greater than root's key
-        if (val < node->data) {
-            return searchRecursive(node->left, val);
-        } else if (val > node->data) {
-            // Key is smaller than root's key
-            return searchRecursive(node->right, val);
-        } else {
-            // Key is found
+        if(node->data == val){
             return true;
+        }
+        // Key is greater than root's key
+        else if (val < node->data) {
+            return searchRecursiveHelper(node->left, val);
+        } 
+        else {
+            // Key is smaller than root's key
+            return searchRecursiveHelper(node->right, val);
         }
     }
 
     // Function for inorder traversal of the BST
     void inorder() {
-        inorderRec(root);
+        inorderHelper(root);
         cout << endl;
     }
 
     // Recursive function for inorder traversal of the BST
-    void inorderRec(Node *node) {
-        if (node != NULL) {
-            inorderRec(node->left);
-            cout << node->data << " -> ";
-            inorderRec(node->right);
+    void inorderHelper(Node *node) {
+        if(node == NULL){
+            return;
         }
+
+        inorderHelper(node->left);
+        cout << node->data << " -> ";
+        inorderHelper(node->right);
     }
 
     // Function for preorder traversal of the BST
     void preorder() {
-        preorderRec(root);
+        preorderHelper(root);
         cout << endl;
     }
 
     // Recursive function for preorder traversal of the BST
-    void preorderRec(Node *node) {
+    void preorderHelper(Node *node) {
         if (node != NULL) {
             cout << node->data << " -> ";
-            preorderRec(node->left);
-            preorderRec(node->right);
+            preorderHelper(node->left);
+            preorderHelper(node->right);
         }
     }
 
     // Function for postorder traversal of the BST
     void postorder() {
-        postorderRec(root);
+        postorderHelper(root);
         cout << endl;
     }
 
     // Recursive function for postorder traversal of the BST
-    void postorderRec(Node *node) {
+    void postorderHelper(Node *node) {
         if (node != NULL) {
-            postorderRec(node->left);
-            postorderRec(node->right);
+            postorderHelper(node->left);
+            postorderHelper(node->right);
             cout << node->data << " -> ";
         }
     }
 
     // Function to delete a node from the BST
-    void deleteNode(int key) {
-        root = deleteRec(root, key);
+    void deleteNode(int key){
+        root = deleteNodeHelper(root, key);
     }
 
-    // Recursive function to delete a node from the BST
-    Node *deleteRec(Node *node, int key) {
-        // Base case: If the tree is empty
-        if (node == NULL) {
-            return node;
+    // Recursive Helper function to delete a node from the BST
+    Node* deleteNodeHelper(Node* node, int key){
+        if(node == NULL){
+            return NULL;
         }
 
-        // Otherwise, recur down the tree
-        if (key < node->data) {
-            node->left = deleteRec(node->left, key);
-        } else if (key > node->data) {
-            node->right = deleteRec(node->right, key);
-        } else {
-            // Node with only one child or no child
-            if (node->left == NULL) {
-                Node *temp = node->right;
-                delete node;
-                return temp;
-            } else if (node->right == NULL) {
-                Node *temp = node->left;
-                delete node;
-                return temp;
+        if(node->data > key){
+            node->left = deleteNodeHelper(node->left, key);
+        }
+        else if(node->data < key){
+            node->right = deleteNodeHelper(node->right, key);
+        }
+        else{
+            if(node->left == NULL && node->right == NULL){
+                return NULL;
             }
-
-            // Node with two children: Get the inorder successor (smallest in the right subtree)
-            Node *temp = minValueNode(node->right);
-
-            // Copy the inorder successor's content to this node
-            node->data = temp->data;
-
-            // Delete the inorder successor
-            node->right = deleteRec(node->right, temp->data);
+            else if(node->left != NULL && node->right == NULL){
+                return node->left;
+            }
+            else if(node->right != NULL && node->left == NULL){
+                return node->right;
+            }
+            else{
+                Node* temp = findMinValueNode(node->right);
+                node->data = temp->data;
+                node->right = deleteNodeHelper(node->right, temp->data);
+            }
         }
+
         return node;
     }
 
     // Function to find the node with the minimum value starting from a specific node(used in delete)
-    Node *minValueNode(Node *node) {
+    Node *findMinValueNode(Node *node) {
         Node *current = node;
         while (current && current->left != NULL) {
             current = current->left;
@@ -198,24 +216,20 @@ public:
     }
 
     // Function to find the minimum node in the tree
-    Node* minValue(){
-        Node* current = root;
-        while(current->left != NULL){
-            current = current->left;
-        }
-        return current;
+    Node* findMinValue(){
+        return findMinValueNode(root);
     }
 };
 
 int main() {
     BST bst;
-    bst.insert(50);
-    bst.insert(30);
-    bst.insert(20);
-    bst.insert(40);
-    bst.insert(70);
-    bst.insert(60);
-    bst.insert(80);
+    bst.insertIterative(50);
+    bst.insertIterative(30);
+    bst.insertIterative(20);
+    bst.insertIterative(40);
+    bst.insertIterative(70);
+    bst.insertIterative(60);
+    bst.insertIterative(80);
 
     cout << "Inorder traversal of the BST:" << endl;
     bst.inorder();
@@ -227,7 +241,7 @@ int main() {
     bst.postorder();
 
     int key = 40;
-    if (bst.search(key)) {
+    if (bst.searchIterative(key)) {
         cout << "Node with value " << key << " found in the BST." << endl;
     } else {
         cout << "Node with value " << key << " not found in the BST." << endl;

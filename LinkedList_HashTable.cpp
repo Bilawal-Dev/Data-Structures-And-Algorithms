@@ -2,8 +2,7 @@
 using namespace std;
 
 // Node class for the linked list
-class Node
-{
+class Node {
 public:
     int data;
     Node *next;
@@ -16,8 +15,7 @@ public:
 };
 
 // Linked list class
-class LinkedList
-{
+class LinkedList {
 public:
     Node *head;
 
@@ -33,16 +31,15 @@ public:
         if (head == NULL)
         {
             head = newNode;
+            return;
         }
-        else
+
+        Node *temp = head;
+        while (temp->next != NULL)
         {
-            Node *temp = head;
-            while (temp->next != NULL)
-            {
-                temp = temp->next;
-            }
-            temp->next = newNode;
+            temp = temp->next;
         }
+        temp->next = newNode;
     }
 
     // Remove a node with the given data
@@ -80,7 +77,8 @@ public:
         Node *temp = head;
         while (temp != NULL)
         {
-            if (temp->data == data){
+            if (temp->data == data)
+            {
                 return true;
             }
 
@@ -103,20 +101,19 @@ public:
 };
 
 // Hash table class with chaining
-class HashTable
-{
+class HashTable {
 private:
-    int size;  // Fixed size of the hash table
-    LinkedList *table[10];  // Array of LinkedList pointers with fixed size
+    int size;              // Fixed size of the hash table
+    LinkedList* table[10]; // Array of LinkedList pointers with fixed size
 
 public:
     HashTable()
     {
         size = 10;
-        
+
         for (int i = 0; i < size; i++)
         {
-            table[i] = new LinkedList();  // Initialize each element of the table as a new LinkedList
+            table[i] = new LinkedList(); // Initialize each element of the table as a new LinkedList
         }
     }
 
@@ -129,21 +126,21 @@ public:
     void insert(int key)
     {
         int hashValue = hashFunc(key);
-        table[hashValue]->insert(key);  // Use -> to access the insert method
+        table[hashValue]->insert(key); // Use -> to access the insert method
     }
 
     // Remove a key from the hash table
     void remove(int key)
     {
         int hashValue = hashFunc(key);
-        table[hashValue]->remove(key);  // Use -> to access the remove method
+        table[hashValue]->remove(key); // Use -> to access the remove method
     }
 
     // Search for a key in the hash table
     bool search(int key)
     {
         int hashValue = hashFunc(key);
-        return table[hashValue]->search(key);  // Use -> to access the search method
+        return table[hashValue]->search(key); // Use -> to access the search method
     }
 
     // Display the hash table
@@ -152,7 +149,7 @@ public:
         for (int i = 0; i < size; i++)
         {
             cout << i << ": ";
-            table[i]->display();  // Use -> to access the display method
+            table[i]->display(); // Use -> to access the display method
         }
     }
 };

@@ -1,8 +1,7 @@
 #include <iostream>
 using namespace std;
 
-class Node
-{
+class Node {
 public:
     int data;
 
@@ -12,8 +11,7 @@ public:
     }
 };
 
-class HashTable
-{
+class HashTable {
 private:
     Node *table[10];
     int size;
@@ -152,8 +150,7 @@ public:
     }
 };
 
-int main()
-{
+int main() {
     HashTable ht;
 
     ht.Linear_Probing_Insert(10);
